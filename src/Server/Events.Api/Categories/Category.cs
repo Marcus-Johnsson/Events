@@ -6,12 +6,3 @@ public class Category
     public string Title { get; set; } = string.Empty;
 }
 
-public class CreateCategoryRequest
-{
-    public string Title { get; set; } = string.Empty;
-}
-
-public class UpdateCategoryRequest
-{
-    public string Title { get; set; } = string.Empty;
-}
