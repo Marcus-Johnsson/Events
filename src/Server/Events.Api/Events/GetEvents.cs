@@ -21,7 +21,7 @@ namespace Events.Api.Events
         {
             var assignedCategories = await dbContext.Events
                 .Include(c => c.Categories)
-                .FirstOrDefaultAsync();
+                .ToListAsync();
             return TypedResults.Ok(assignedCategories);
         }
 
