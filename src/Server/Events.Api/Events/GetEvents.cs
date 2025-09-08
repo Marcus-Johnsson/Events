@@ -1,7 +1,8 @@
-﻿using Events.Api.Data;
-using Events.Api._internal;
+﻿using Events.Api._internal;
+using Events.Api.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Events.Api.Events
 {
@@ -37,6 +38,10 @@ namespace Events.Api.Events
             {
                 return TypedResults.BadRequest("Id cannot be empty.");
             }
+
+            var assignedCategories = await dbContext.Events
+                .Include(c => c.Categories)
+                .FirstOrDefaultAsync();
 
             var idArray = ids.Split(',').Select(int.Parse).ToArray();
 
