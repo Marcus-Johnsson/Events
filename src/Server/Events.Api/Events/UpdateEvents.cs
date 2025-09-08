@@ -1,6 +1,6 @@
 ﻿using Events.Api._internal;
 using Events.Api.Data;
-using Events.Api.Migrations;
+using Events.Api.Categories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,7 +17,7 @@ namespace Events.Api.Events
             .Produces<string>(StatusCodes.Status500InternalServerError);
 
 
-        public record UpdateEventRequest(string Title, string Description, DateTime StartDate, DateTime EndDate, string Location) { }
+        public record UpdateEventRequest(string Title, string Description, DateTime StartDate, DateTime EndDate, string Location, int[]? CategoryIds) { }
 
         public record UpdateEventResponse(int Id);
 
@@ -41,12 +41,46 @@ namespace Events.Api.Events
 
             try
             {
-                var oldEvent = await dbContext.Events.FindAsync(id);
+                // Load the existing event including its categories
+                var oldEvent = await dbContext.Events
+                    .Include(e => e.Categories)
+                    .FirstOrDefaultAsync(e => e.Id == id);
+                
+                if (oldEvent == null)
+                {
+                    return TypedResults.NotFound($"Event with ID {id} not found.");
+                }
+
+                // Update basic properties
                 oldEvent.Title = request.Title.Trim();
                 oldEvent.Description = request.Description.Trim();
                 oldEvent.StartDate = DateTime.SpecifyKind(request.StartDate, DateTimeKind.Utc);
                 oldEvent.EndDate = DateTime.SpecifyKind(request.EndDate, DateTimeKind.Utc);
                 oldEvent.Location = request.Location;
+
+                // Handle categories update
+                if (request.CategoryIds != null)
+                {
+                    // Get the new categories for the database
+                    var newCategories = await dbContext.Categories
+                        .Where(c => request.CategoryIds.Contains(c.Id))
+                        .ToListAsync();
+
+                    // Check if all requested categories exist
+                    var foundCategoryIds = newCategories.Select(c => c.Id).ToList();
+                    var missingCategoryIds = request.CategoryIds.Except(foundCategoryIds).ToList();
+
+                    if (missingCategoryIds.Any())
+                    {
+                        return TypedResults.BadRequest($"Categories with IDs {string.Join(", ", missingCategoryIds)} do not exist.");
+                    }
+
+                    oldEvent.Categories.Clear();
+                    foreach (var category in newCategories)
+                    {
+                        oldEvent.Categories.Add(category);
+                    }
+                }
 
                 await dbContext.SaveChangesAsync();
                 return TypedResults.Ok(id);
