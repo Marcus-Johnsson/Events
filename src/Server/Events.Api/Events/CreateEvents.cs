@@ -1,5 +1,6 @@
 ﻿using Events.Api.Data;
 using Events.Api._internal;
+using Events.Api.Categories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,8 +16,8 @@ namespace Events.Api.Events
             .Produces<string>(StatusCodes.Status400BadRequest)
             .Produces<string>(StatusCodes.Status500InternalServerError);
 
-        
-        public record CreateEventRequest(string Title, string Description, DateTime StartDate, DateTime EndDate, string Location) { }
+
+        public record CreateEventRequest(string Title, string Description, DateTime StartDate, DateTime EndDate, string Location, int[]? CategoryIds) { }
 
 
         public record CreateEventResponse(int Id);
@@ -35,13 +36,32 @@ namespace Events.Api.Events
             }
 
             // Check if a event with the same title already exists
-            var existingCategory = await dbContext.Events
-                .FirstOrDefaultAsync(c => c.Title.ToLower() == request.Title.ToLower().Trim());
+            var existingEvent = await dbContext.Events
+                .FirstOrDefaultAsync(e => e.Title.ToLower() == request.Title.ToLower().Trim());
 
-            if (existingCategory != null)
+            if (existingEvent != null)
             {
-                return TypedResults.BadRequest($"A Event with the title '{request.Title.Trim()}' already exists.");
+                return TypedResults.BadRequest($"An Event with the title '{request.Title.Trim()}' already exists.");
             }
+
+            // Validate and get categories if provided
+            List<Category> categories = new();
+            if (request.CategoryIds != null && request.CategoryIds.Any())
+            {
+                categories = await dbContext.Categories
+                    .Where(c => request.CategoryIds.Contains(c.Id))
+                    .ToListAsync();
+
+                // Check if all requested categories exist
+                var foundCategoryIds = categories.Select(c => c.Id).ToList();
+                var missingCategoryIds = request.CategoryIds.Except(foundCategoryIds).ToList();
+
+                if (missingCategoryIds.Any())
+                {
+                    return TypedResults.BadRequest($"Categories with IDs {string.Join(", ", missingCategoryIds)} do not exist.");
+                }
+            }
+
             var newEvent = new Event()
             {
                 Title = request.Title.Trim(),
@@ -49,6 +69,7 @@ namespace Events.Api.Events
                 StartDate = DateTime.SpecifyKind(request.StartDate, DateTimeKind.Utc),
                 EndDate = DateTime.SpecifyKind(request.EndDate, DateTimeKind.Utc),
                 Location = request.Location,
+                Categories = categories // Assign the categories to establish many-to-many relationship
             };
             dbContext.Events.Add(newEvent);
             await dbContext.SaveChangesAsync();

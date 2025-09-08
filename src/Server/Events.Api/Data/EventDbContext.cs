@@ -13,5 +13,16 @@ namespace Events.Api.Data
         public DbSet<Event> Events { get; set; }
 
         public DbSet<Category> Categories { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // Configure many-to-many relationship between Events and Categories
+            modelBuilder.Entity<Event>()
+                .HasMany(e => e.Categories)
+                .WithMany(c => c.Events)
+                .UsingEntity("EventCategories"); // Optional: specify join table name
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }
