@@ -25,6 +25,5 @@ namespace Events.Api.Categories
 
             return TypedResults.NoContent();
         }
-    
     }
 }

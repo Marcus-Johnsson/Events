@@ -13,7 +13,7 @@ namespace Events.Api.Categories
         public static void MapEndpoint(IEndpointRouteBuilder app)
         {
                 // Get category by ID
-             app.MapPatch("/api/categories/{id:int}", Handle)
+             app.MapPut("/api/categories/{id:int}", Handle)
                 .WithSummary("Update category Title")
                 .Produces<Category>(StatusCodes.Status200OK)
                 .Produces(StatusCodes.Status404NotFound);
@@ -47,8 +47,6 @@ namespace Events.Api.Categories
                 var oldCategory = await dbContext.Categories.FindAsync(id);
                 oldCategory.Title = request.Title.Trim();
 
-
-                dbContext.Update(oldCategory);
                 await dbContext.SaveChangesAsync();
                 return TypedResults.Ok(id);
             }
