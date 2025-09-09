@@ -9,7 +9,7 @@ interface AppError {
 export class ApiService {
     public async post<T,D>(endpoint: string, data: D): Promise<T | AppError> {
 try {
-			const response = await fetch(`${apiUrl}/${endpoint}`, {
+			const response = await fetch(`${apiUrl}${endpoint}`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'

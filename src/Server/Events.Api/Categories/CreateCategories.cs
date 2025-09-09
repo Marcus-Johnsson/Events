@@ -8,7 +8,7 @@ namespace Events.Api.Categories;
 public class CreateCategories : IEndpoint
 {
     public static void MapEndpoint(IEndpointRouteBuilder app) => app
-        .MapPost("/api/categories/create", Handle)
+        .MapPost("/api/categories", Handle)
         .WithSummary("Create category")
         .Produces<Response>(StatusCodes.Status200OK)
         .Produces<string>(StatusCodes.Status400BadRequest)
