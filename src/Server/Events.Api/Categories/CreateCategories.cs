@@ -14,31 +14,30 @@ public class CreateCategories : IEndpoint
         .Produces<string>(StatusCodes.Status400BadRequest)
         .Produces<string>(StatusCodes.Status500InternalServerError);
 
-    public record Request(string Title);
     public record Response(int Id);
 
     private static async Task<IResult> Handle(
-        [FromBody] Request request,
+        [FromBody] string title,
         [FromServices] EventDbContext dbContext)
     {
         // Check if title is null or empty
-        if (string.IsNullOrWhiteSpace(request.Title))
+        if (string.IsNullOrWhiteSpace(title))
         {
             return TypedResults.BadRequest("Title cannot be empty.");
         }
 
         // Check if a category with the same title already exists
         var existingCategory = await dbContext.Categories
-            .FirstOrDefaultAsync(c => c.Title.ToLower() == request.Title.ToLower().Trim());
+            .FirstOrDefaultAsync(c => c.Title.ToLower() == title.ToLower().Trim());
 
         if (existingCategory != null)
         {
-            return TypedResults.BadRequest($"A category with the title '{request.Title.Trim()}' already exists.");
+            return TypedResults.BadRequest($"A category with the title '{title.Trim()}' already exists.");
         }
 
         var category = new Category
         {
-            Title = request.Title.Trim()
+            Title = title.Trim()
         };
 
         dbContext.Categories.Add(category);
