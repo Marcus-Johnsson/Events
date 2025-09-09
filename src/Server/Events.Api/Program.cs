@@ -7,12 +7,12 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//// Configure JSON options globally
-//builder.Services.Configure<JsonOptions>(options =>
-//{
-//    options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-//    options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
-//});
+// Configure JSON options globally
+builder.Services.Configure<JsonOptions>(options =>
+{
+    options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

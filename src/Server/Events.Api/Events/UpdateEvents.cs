@@ -36,7 +36,7 @@ namespace Events.Api.Events
             }
 
             // Check if a event with the same title already exists
-            var existingCategory = await dbContext.Events
+            var existingEvent = await dbContext.Events
                 .FirstOrDefaultAsync(c => c.Title.ToLower() == request.Title.ToLower().Trim());
 
             try
