@@ -3,7 +3,6 @@ import ApiService from '../apiService';
 
 
 export interface CategoryDataReponse {
-   
     name: string;
 }
 

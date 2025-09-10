@@ -4,15 +4,15 @@ export interface UpdateCategoriesData {
     name: string;
 }
 
-export interface EventDataReponse {
+export interface CatagoryDataReponse {
     name: string;
 }
 
 export class EventPostService {
     constructor(private apiService: ApiService) {}
 
-    public async patchEvent<T>(eventData: UpdateCategoriesData): Promise<EventDataReponse> {
-        const response = await this.apiService.put('/category', eventData);
-        return response as EventDataReponse;
+    public async patchEvent<T>(categoryData: UpdateCategoriesData): Promise<CatagoryDataReponse> {
+        const response = await this.apiService.put('/category', categoryData);
+        return response as CatagoryDataReponse;
     }
 }
