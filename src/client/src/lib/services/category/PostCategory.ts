@@ -2,16 +2,16 @@ import ApiService from '../apiService';
 
 
 
-export interface CategoryDataReponse {
+export interface CategoryDataResponse {
     name: string;
 }
 
 export class CategoryPostService {
     constructor(private apiService: ApiService) {}
 
-    public async postCategory<T>(eventData: string): Promise<CategoryDataReponse> {
-		const response = await this.apiService.post('/categories', eventData);
-		return response as CategoryDataReponse;
+    public async postCategory<T>(categoryData: string): Promise<CategoryDataResponse> {
+		const response = await this.apiService.post('/categories', categoryData);
+		return response as CategoryDataResponse;
 
     }
 }

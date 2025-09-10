@@ -4,7 +4,7 @@ export interface categoryDeleteData {
     id: number;
 }
 
-export interface categoryDataReponse {
+export interface CategoryDataResponse {
     Id: number; 
 }
 

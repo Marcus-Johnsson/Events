@@ -1,4 +1,4 @@
-import {ApiService} from '../apiService';
+import ApiService from '../apiService';
 
 export interface EventData {
     name: string;
