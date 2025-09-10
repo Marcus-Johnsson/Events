@@ -23,7 +23,7 @@ namespace Events.Api.Events
         {
             if (string.IsNullOrWhiteSpace(category))
             {
-                return TypedResults.BadRequest("Id cannot be empty.");
+                return TypedResults.BadRequest("Category cannot be empty.");
             }
 
             var filteredEvents = await dbContext.Events

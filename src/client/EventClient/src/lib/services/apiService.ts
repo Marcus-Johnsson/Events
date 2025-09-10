@@ -6,7 +6,7 @@ interface AppError {
 	details?: unknown;
 }
 
-export class ApiService {
+class ApiService {
     public async post<T,D>(endpoint: string, data: D): Promise<T | AppError> {
 try {
 			const response = await fetch(`${apiUrl}${endpoint}`, {
@@ -21,20 +21,19 @@ try {
 		} catch (error) {
 			return {
 				code: 'NETWORK_ERROR',
-				message: `Network error while posting to ${apiUrl}/${endpoint}`,
+				message: `Network error while posting to ${apiUrl}${endpoint}`,
 				details: error
 			};
 		}
     }
 
     public async get<T>(
-        //Data type we send
         endpoint: string,
 
         // Data types?
 		params?: Record<string, string | number | undefined>): Promise<T | AppError>{
          try {
-			let url = `${apiUrl}/${endpoint}`;
+			let url = `${apiUrl}${endpoint}`;
 			const response = await fetch(url, {
 				
 			});
@@ -58,7 +57,7 @@ try {
              catch (error) {
             			return {
 				code: 'NETWORK_ERROR',
-				message: `Network error while getting from ${apiUrl}/${endpoint}`,
+				message: `Network error while getting from ${apiUrl}${endpoint}`,
 				details: error
                 };
         }
@@ -67,7 +66,7 @@ try {
 
     public async put<T,D>(endpoint: string, data: D): Promise<T | AppError> {
         try {
-            const response = await fetch(`${apiUrl}/${endpoint}`, {
+            const response = await fetch(`${apiUrl}${endpoint}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -85,7 +84,7 @@ try {
 			
             return {
 				code: 'NETWORK_ERROR',
-				message: `Network error while patching to ${apiUrl}/${endpoint}`,
+				message: `Network error while patching to ${apiUrl}${endpoint}`,
 				details: error
 			};
 		}
@@ -93,7 +92,7 @@ try {
 
     public async delete<T>(endpoint: string): Promise<T | AppError> {
         try {
-            const response = await fetch(`${apiUrl}/${endpoint}`, {
+            const response = await fetch(`${apiUrl}${endpoint}`, {
                 method: 'DELETE',
             });
 
@@ -101,7 +100,7 @@ try {
                 if (response.status === 404) {
                     return {
                         code: 'NOT_FOUND',
-                        message: `Resource not found at ${apiUrl}/${endpoint}`,
+                        message: `Resource not found at ${apiUrl}${endpoint}`,
                         details: await response.text()
                     };
                 }
@@ -112,9 +111,12 @@ try {
              } catch (error) {
 			return {
 				code: 'NETWORK_ERROR',
-				message: `Network error while deleting ${apiUrl}/${endpoint}`,
+				message: `Network error while deleting ${apiUrl}${endpoint}`,
 				details: error
 			};
 		}
     }
+	
 }
+
+export default ApiService;

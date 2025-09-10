@@ -1,20 +1,16 @@
-import {ApiService} from '../apiService';
+import ApiService from '../apiService';
 
-export interface CategoriesData {
-    id: string;
-    name: string;
+
+export interface CategoriesDataReponse{
+    id: number; 
+    title: string;
 }
 
-export interface EventDataReponse {
-    Id: number; 
-    name: string;
-}
-
-export class EventPostService {
+export class CategoryPostService {
     constructor(private apiService: ApiService) {}
 
-    public async GetEvent<T>(): Promise<EventDataReponse> {
+    public async GetEvent<T>(): Promise<CategoriesDataReponse> {
 		const response = await this.apiService.get('/category');
-		return response as EventDataReponse;
+		return response as CategoriesDataReponse;
     }
 }

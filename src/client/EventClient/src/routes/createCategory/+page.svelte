@@ -1,11 +1,11 @@
 <script>
-    import { ApiService } from '$lib/services/apiService';
+    import ApiService from '$lib/services/apiService';
     import { CategoryPostService } from '$lib/services/category/PostCategory';
 
     
     const apiService = new ApiService();
     const categoryPostService = new CategoryPostService(apiService);
-    let title = ""; // reactive variable for the input
+    let title = ""; // bind to input field
 
     async function createCategory() {
         if (!title.trim()) {
