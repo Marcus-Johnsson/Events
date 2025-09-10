@@ -9,8 +9,8 @@ export interface CategoriesDataReponse{
 export class CategoryPostService {
     constructor(private apiService: ApiService) {}
 
-    public async GetEvent<T>(): Promise<CategoriesDataReponse> {
-		const response = await this.apiService.get('/category');
-		return response as CategoriesDataReponse;
+    public async GetCategories<T>(): Promise<CategoriesDataReponse[]> {
+		const response = await this.apiService.get('/categories');
+		return response as CategoriesDataReponse[];
     }
 }

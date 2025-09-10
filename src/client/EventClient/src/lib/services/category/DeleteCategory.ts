@@ -1,4 +1,4 @@
-import {ApiService} from '../apiService';
+import ApiService from '../apiService';
 
 export interface categoryDeleteData {
     id: number;
@@ -12,7 +12,7 @@ export class EventPostService {
     constructor(private apiService: ApiService) {}
 
     public async deleteEvent<T>(categoryData: categoryDeleteData): Promise<categoryDeleteData> {
-        const response = await this.apiService.delete(`/category//${categoryData}`);
+        const response = await this.apiService.delete(`/category/${categoryData}`);
         return response as categoryDeleteData;
     }
 }

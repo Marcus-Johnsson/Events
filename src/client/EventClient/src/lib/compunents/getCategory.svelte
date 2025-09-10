@@ -1,14 +1,17 @@
-<script>
+<script lang="ts">
     import ApiService from "$lib/services/apiService";
     import { CategoryPostService } from "$lib/services/category/GetCategory";
     import { onMount } from "svelte";
 
     const apiService = new ApiService();
-    let categories = [];
     
+    interface Category{
+        title: string;
+    }
+    let categories: Category[] = [];
 
     onMount(async () => {
-    categories = new CategoryPostService(apiService);
+    categories = await new CategoryPostService(apiService).GetCategories();
     });
 
 </script>
