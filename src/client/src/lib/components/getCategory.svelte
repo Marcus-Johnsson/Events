@@ -19,6 +19,19 @@
 
 <div>
     {#each categories as category}
-        <div>{category.id}. {category.title}</div>
+        <div class="category"
+        
+        >{category.id}. {category.title}</div>
     {/each}
 </div>
+
+<style>
+    .category {
+        margin: 10px 0;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+        width: fit-content;
+    }
+</style>
