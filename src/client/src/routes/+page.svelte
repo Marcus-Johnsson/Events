@@ -1,6 +1,6 @@
 <script>
     import { onMount } from "svelte";
-    import GetCategory from "$lib/compunents/getCategory.svelte";
+    import GetCategory from "$lib/components/getCategory.svelte";
 </script>
 
 <h1>Welcome to SvelteKit</h1>

@@ -7,6 +7,7 @@
     
     interface Category{
         title: string;
+        id: number;
     }
     let categories: Category[] = [];
 
@@ -18,6 +19,6 @@
 
 <div>
     {#each categories as category}
-        <div>{category.title}</div>
+        <div>{category.id}. {category.title}</div>
     {/each}
 </div>
