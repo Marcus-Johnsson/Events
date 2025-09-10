@@ -1,4 +1,4 @@
-import ApiService from "./apiService";
+import ApiService from "../apiService";
 
 export interface GetAllEventResponse {
     id: number;
@@ -20,7 +20,7 @@ export class EventServiceGet {
     constructor(private apiService: ApiService) {}
 
     async getAllEvents(): Promise<GetAllEventResponse[]> {
-        const response = await this.apiService.get<GetAllEventResponse[]>("events");
+        const response = await this.apiService.get<GetAllEventResponse[]>("/events");
 
 
         if ("code" in response) {
