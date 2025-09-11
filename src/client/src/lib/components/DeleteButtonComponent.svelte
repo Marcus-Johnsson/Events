@@ -4,6 +4,7 @@
 
   export let resource: string; // e.g. "categories", "events"
   export let id: number;
+  export let className: string;
 
   const apiService = new ApiService();
 
@@ -30,6 +31,6 @@
   }
 </script>
 
-<button on:click={handleDelete} title="Delete" style="font-size: 1em; padding: 0.2em 0.8em;">
+<button class={className} on:click={handleDelete} title="Delete">
   Delete
 </button>

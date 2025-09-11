@@ -1,4 +1,4 @@
-    import {CategoryPostService} from "$lib/services/category/PostCategory"
+    import {CategoryPostService} from "$lib/services/category/postCategory"
     import ApiService from "$lib/services/apiService"
 
     const apiService = new ApiService;
