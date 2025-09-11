@@ -1,7 +1,7 @@
 <script>
     import { onMount } from "svelte";
-    import GetCategory from "$lib/components/getCategoryTable.svelte";
-    import GetEvent from "$lib/components/getEvent.svelte";
+    import GetCategory from "$lib/components/CategoryTable.svelte";
+    import GetEvent from "$lib/components/ListEvents.svelte";
     import CreateEvent from "$lib/components/CreateEvent.svelte";
 
 </script>
