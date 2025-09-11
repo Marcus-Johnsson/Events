@@ -14,12 +14,6 @@
     onMount(async () => {
         data.events = await eventGetService.getAllEvents();
     });
-
-    function handleDeleted(event: CustomEvent<{ id: number }>) {
-          const deletedId = event.detail.id;
-          data.events = data.events.filter(event => event.id !== deletedId);
-      }
-
 </script>
 
 <h1>All Events</h1>
@@ -38,7 +32,7 @@
             
             <div class="actions">
                 <button>Ändra</button>
-                <DeleteButtonComponent resource="events" id={event.id} on:deleted={handleDeleted} />
+                <DeleteButtonComponent className="deleteEventButton" resource="events" id={event.id} />
             </div>
         </div>
     {/each}
@@ -84,8 +78,15 @@
         cursor: pointer;
     }
 
-    .danger {
-        background: #e74c3c;
+    :global(.deleteEventButton) {
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    :global(.deleteEventButton):hover {
+        background: #b62525;
         color: white;
     }
 </style>
