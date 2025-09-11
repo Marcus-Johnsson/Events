@@ -18,7 +18,7 @@ let eventData: EventData = {
     <input type="text" bind:value={eventData.name} placeholder="Title">
     <input type="text" bind:value={eventData.description} placeholder="Description">
     <input type="text" bind:value={eventData.location} placeholder="Location">
-    <input type="date" bind:value={eventData.dateStart} placeholder="Event start">
+    <input type="time" bind:value={eventData.dateStart} placeholder="Event start">
     <input type="date" bind:value={eventData.dateEnd} placeholder="Event ends"/>
 
 </div>
