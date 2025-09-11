@@ -23,10 +23,11 @@
     onMount(async () => {
     categories = await new CategoryPostService(apiService).GetCategories();
     });
-    async function confirmOption() {
+
+    async function confirmOption(updatedCategory: UpdateCategoriesData) {
     if (deleteId === null) {
-      const updatedCategory: UpdateCategoriesData = {
-        id: parseInt(selectedCategory),
+      updatedCategory= {
+        id: choosenCategory!,
         title
       };
       updateCategory(updatedCategory);
@@ -46,7 +47,7 @@
   <tbody>
     {#each categories as category}
       <tr style="background-color: {category.id % 2 === 0 ? 'rgb(95, 62, 62)' : 'rgb(124, 100, 56)'}">
-        {#if choosenCategory !== category.id && deleteId != category.id}
+        {#if choosenCategory !== category.id && deleteId === null}
           <td>{category.title}</td>
           <td>
             <button on:click={() => {
@@ -61,16 +62,21 @@
             }}>Remove</button>
           </td>
         {:else}
-          <td>
-            <input type="text" bind:value={title}/>
-          </td>
+         
+            {#if choosenCategory === category.id && deleteId === null}
+                <td><input type="text" bind:value={title}/> </td>
+               {:else}
+                <td>{category.title}</td> 
+            {/if}
+           
+         
           <td>
             <button on:click={() => {
               const updatedCategory: UpdateCategoriesData = {
                 id: category.id,
                 title
               };
-              updateCategory(updatedCategory);
+              confirmOption(updatedCategory);
               choosenCategory = null;
             }}>  {deleteId !== null ? 'Delete' : 'Save'}
             </button>
