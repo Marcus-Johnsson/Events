@@ -3,7 +3,7 @@
     import { EventServiceGet } from '$lib/services/event/eventServiceGet'
     import { onMount } from "svelte";
     import type { GetAllEventResponse } from '$lib/services/event/eventServiceGet';
-    import DeleteButtonComponent from "$lib/components/DeteleButtonComponent.svelte";
+    import DeleteButtonComponent from "$lib/components/DeleteButtonComponent.svelte";
 
     const apiService = new ApiService();
     const eventGetService = new EventServiceGet(apiService);

@@ -5,7 +5,7 @@
       import { updateCategory } from "$lib/services/category/updateCategory";
       import type { UpdateCategoriesData } from "$lib/services/category/putCategory";
       import { text } from "@sveltejs/kit";
-      import DeleteButtonComponent from "$lib/components/DeteleButtonComponent.svelte";
+      import DeleteButtonComponent from "$lib/components/DeleteButtonComponent.svelte";
       import {createCategory} from "$lib/services/category/createCategorybutton";
 
       let choosenCategory: number | null = $state(null);
