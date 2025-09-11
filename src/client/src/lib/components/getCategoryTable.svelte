@@ -39,7 +39,7 @@
         }
 
         choosenCategory = null; 
-      } 
+      }
     
 
       function handleDeleted(event: CustomEvent<{ id: number }>) {

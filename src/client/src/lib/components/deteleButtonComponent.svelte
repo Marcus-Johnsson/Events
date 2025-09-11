@@ -21,10 +21,10 @@
       } else {
         const deletedEvent = new CustomEvent('deleted', {
           detail: { id, resource },
-          bubbles: true
+          bubbles: true,
+          composed: true
         });
         dispatchEvent(deletedEvent);
-        window.location.reload();
       }
     }
   }
