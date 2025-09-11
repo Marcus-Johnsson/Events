@@ -8,7 +8,6 @@
       import DeleteButtonComponent from "$lib/components/DeteleButtonComponent.svelte";
       import {createCategory} from "$lib/services/category/createCategorybutton";
 
-
       let choosenCategory: number | null = $state(null);
       let title = $state("");
       let createTitle = $state("");
