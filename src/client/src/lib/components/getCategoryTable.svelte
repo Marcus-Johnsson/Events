@@ -4,7 +4,8 @@
       import { onMount } from "svelte";
       import { updateCategory } from "$lib/services/category/updateCategory";
       import type { UpdateCategoriesData } from "$lib/services/category/PatchCategory";
-      import DeleteButtonComponent from "$lib/components/deteleButtonComponent.svelte";
+      import { text } from "@sveltejs/kit";
+      import DeleteButtonComponent from "$lib/components/DeteleButtonComponent.svelte";
       import {createCategory} from "$lib/services/category/createCategorybutton";
 
       let choosenCategory: number | null = $state(null);
@@ -37,7 +38,7 @@
         }
 
         choosenCategory = null; 
-      } 
+      }
     
 
       function handleDeleted(event: CustomEvent<{ id: number }>) {
