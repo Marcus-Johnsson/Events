@@ -3,7 +3,8 @@
     import { EventServiceGet } from '$lib/services/event/eventServiceGet'
     import { onMount } from "svelte";
     import type { GetAllEventResponse } from '$lib/services/event/eventServiceGet';
-    
+    import DeleteButtonComponent from "$lib/components/DeteleButtonComponent.svelte";
+
     const apiService = new ApiService();
     const eventGetService = new EventServiceGet(apiService);
     export let data: { events: GetAllEventResponse[] } = { events: [] };
@@ -13,6 +14,11 @@
     onMount(async () => {
         data.events = await eventGetService.getAllEvents();
     });
+
+    function handleDeleted(event: CustomEvent<{ id: number }>) {
+          const deletedId = event.detail.id;
+          data.events = data.events.filter(event => event.id !== deletedId);
+      }
 
 </script>
 
@@ -32,7 +38,7 @@
             
             <div class="actions">
                 <button>Ändra</button>
-                <button class="danger">Ta bort</button>
+                <DeleteButtonComponent resource="events" id={event.id} on:deleted={handleDeleted} />
             </div>
         </div>
     {/each}
@@ -83,8 +89,3 @@
         color: white;
     }
 </style>
-
-
-
-
-

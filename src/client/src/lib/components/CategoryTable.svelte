@@ -74,11 +74,7 @@
               }}> Ändra</button>
             </td>
             <td>
-              <DeleteButtonComponent 
-                resource="categories"
-                id={category.id}
-                on:deleted={handleDeleted}
-              />
+              <DeleteButtonComponent resource="categories" id={category.id} on:deleted={handleDeleted} />
             </td>
           {:else}
           
