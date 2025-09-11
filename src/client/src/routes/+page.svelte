@@ -10,7 +10,15 @@
 <a href="/createCategory">Category</a>
 
 <div>
+<<<<<<< Updated upstream
     <GetCategory />
     <GetEvent />
+=======
+    <CreateEvent></CreateEvent>
+    
+    <GetEvent></GetEvent>
+    
+    
+>>>>>>> Stashed changes
 </div>
 
