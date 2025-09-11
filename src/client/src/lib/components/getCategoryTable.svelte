@@ -4,10 +4,8 @@
       import { onMount } from "svelte";
       import { updateCategory } from "$lib/services/category/updateCategory";
       import type { UpdateCategoriesData } from "$lib/services/category/PatchCategory";
-      import { text } from "@sveltejs/kit";
       import DeleteButtonComponent from "$lib/components/deteleButtonComponent.svelte";
       import {createCategory} from "$lib/services/category/createCategorybutton";
-
 
       let choosenCategory: number | null = $state(null);
       let title = $state("");
