@@ -1,7 +1,8 @@
 import ApiService from '../apiService';
 
 export interface UpdateCategoriesData {
-    name: string;
+    id: number;
+    title: string;
 }
 
 export interface CatagoryDataReponse {

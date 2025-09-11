@@ -1,18 +1,14 @@
 import ApiService from '../apiService';
 
-export interface categoryDeleteData {
+export interface CategoryDeleteData {
     id: number;
 }
 
-export interface CategoryDataResponse {
-    Id: number; 
-}
-
-export class EventPostService {
+export class CategoryDeleteService {
     constructor(private apiService: ApiService) {}
 
-    public async deleteEvent<T>(categoryData: categoryDeleteData): Promise<categoryDeleteData> {
-        const response = await this.apiService.delete(`/category/${categoryData}`);
-        return response as categoryDeleteData;
+    public async deleteCategory(categoryData: CategoryDeleteData): Promise<CategoryDeleteData> {
+        const response = await this.apiService.delete(`/category/${categoryData.id}`);
+        return response as CategoryDeleteData;
     }
 }
