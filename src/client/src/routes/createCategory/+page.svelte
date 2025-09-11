@@ -1,6 +1,6 @@
 <script>
     import ApiService from '$lib/services/apiService';
-    import { CategoryPostService, } from '$lib/services/category/PostCategory';
+    import { CategoryPostService, } from '$lib/services/category/postCategory';
     
 
     

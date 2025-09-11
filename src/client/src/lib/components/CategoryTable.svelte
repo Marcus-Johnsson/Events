@@ -1,9 +1,9 @@
   <script lang="ts">
       import ApiService from "$lib/services/apiService";
-      import { CategoryPostService } from "$lib/services/category/GetCategory";
+      import { CategoryPostService } from "$lib/services/category/getCategory";
       import { onMount } from "svelte";
       import { updateCategory } from "$lib/services/category/updateCategory";
-      import type { UpdateCategoriesData } from "$lib/services/category/PatchCategory";
+      import type { UpdateCategoriesData } from "$lib/services/category/putCategory";
       import { text } from "@sveltejs/kit";
       import DeleteButtonComponent from "$lib/components/DeteleButtonComponent.svelte";
       import {createCategory} from "$lib/services/category/createCategorybutton";
