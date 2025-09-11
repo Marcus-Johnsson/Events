@@ -79,7 +79,7 @@ class ApiService {
 		} catch (error) {
 			return {
 				code: 'NETWORK_ERROR',
-				message: `Network error while patching to ${apiUrl}${endpoint}`,
+				message: `Network error while patching to ${apiUrl.replace(/\/$/, '')}/${endpoint.replace(/^\//, '')}`,
 				details: error
 			};
 		}

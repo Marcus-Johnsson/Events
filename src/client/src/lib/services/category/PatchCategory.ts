@@ -12,8 +12,8 @@ export interface CatagoryDataReponse {
 export class EventPostService {
     constructor(private apiService: ApiService) {}
 
-    public async patchEvent<T>(categoryData: UpdateCategoriesData): Promise<CatagoryDataReponse> {
-        const response = await this.apiService.put('/category', categoryData);
+    public async putEvent<T>(categoryData: UpdateCategoriesData): Promise<CatagoryDataReponse> {
+        const response = await this.apiService.put('/categories/'+ categoryData.id, categoryData);
         return response as CatagoryDataReponse;
     }
 }
