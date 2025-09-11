@@ -1,6 +1,6 @@
   <script lang="ts">
       import ApiService from "$lib/services/apiService";
-      import { CategoryPostService } from "$lib/services/category/getCategory";
+      import { CategoryPostService } from "$lib/services/category/GetCategory";
       import { onMount } from "svelte";
       import { updateCategory } from "$lib/services/category/updateCategory";
       import type { UpdateCategoriesData } from "$lib/services/category/putCategory";
