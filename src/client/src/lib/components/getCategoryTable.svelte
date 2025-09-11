@@ -6,6 +6,7 @@
     import type { UpdateCategoriesData } from "$lib/services/category/PatchCategory";
     import { text } from "@sveltejs/kit";
     import {CategoryDeleteService} from "$lib/services/category/DeleteCategory";
+    import DeleteButtonComponent from "$lib/components/deteleButtonComponent.svelte";
 
     let choosenCategory: number | null = null;
     let title = "";
@@ -34,7 +35,12 @@
      await categoryDeleteService.deleteCategory({id: deleteId});
     }
     choosenCategory = null; // Reset after updating
-  }
+    }
+
+    function handleDeleted(event: CustomEvent<{ id: number }>) {
+        const deletedId = event.detail.id;
+        categories = categories.filter(category => category.id !== deletedId);
+    }
 </script>
 
 <table>
@@ -55,10 +61,11 @@
             }}> Ändra</button>
           </td>
           <td>
-            <button on:click={() => {
-              choosenCategory = category.id;
-              deleteId = category.id;
-            }}>Remove</button>
+            <DeleteButtonComponent
+              resource="categories"
+              id={category.id}
+              on:deleted={handleDeleted}
+            />
           </td>
         {:else}
           <td>
