@@ -1,5 +1,7 @@
 <script lang="ts">
   import ApiService from '$lib/services/apiService';
+  import { singularize } from '$lib/utils/singularize';
+
   export let resource: string; // e.g. "categories", "events"
   export let id: number;
 
@@ -7,8 +9,12 @@
 
   async function handleDelete(event: MouseEvent) {
     event.stopPropagation();
-    if (confirm(`Are you sure you want to delete this ${resource.slice(0, -1)}?`)) {
+    
+    const singular = singularize(resource);
+
+    if (confirm(`Are you sure you want to delete this ${singular}?`)) {
       const result = await apiService.delete(`${resource}/${id}`);
+
       if (typeof result === 'object' && result !== null && "code" in result) {
         const errorResult = result as { code: number; message: string };
         alert(`Error deleting: ${errorResult.message}`);
