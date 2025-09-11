@@ -3,6 +3,7 @@
     import GetCategory from "$lib/components/CategoryTable.svelte";
     import GetEvent from "$lib/components/ListEvents.svelte";
     import CreateEvent from "$lib/components/CreateEvent.svelte";
+    import DateTimeInput from "$lib/components/Date-TimeInput.svelte";
 
 </script>
 
@@ -12,7 +13,9 @@
 
 <div>
     <CreateEvent></CreateEvent>
-
-    <GetEvent></GetEvent>    
+    <DateTimeInput></DateTimeInput>
+    <GetEvent></GetEvent>
+    
+    
 </div>
 
