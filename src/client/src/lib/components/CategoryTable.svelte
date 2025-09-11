@@ -1,11 +1,15 @@
   <script lang="ts">
       import ApiService from "$lib/services/apiService";
-      import { CategoryPostService } from "$lib/services/category/GetCategory";
+      import { CategoryPostService } from "$lib/services/category/getCategory";
       import { onMount } from "svelte";
       import { updateCategory } from "$lib/services/category/updateCategory";
-      import type { UpdateCategoriesData } from "$lib/services/category/PatchCategory";
+      import type { UpdateCategoriesData } from "$lib/services/category/putCategory";
       import { text } from "@sveltejs/kit";
+<<<<<<< HEAD:src/client/src/lib/components/getCategoryTable.svelte
       import DeleteButtonComponent from "$lib/components/deteleButtonComponent.svelte";
+=======
+      import DeleteButtonComponent from "$lib/components/DeleteButtonComponent.svelte";
+>>>>>>> 0516ba447be6077a2f8ae6af15806777f42d5b2a:src/client/src/lib/components/CategoryTable.svelte
       import {createCategory} from "$lib/services/category/createCategorybutton";
 
       let choosenCategory: number | null = $state(null);
@@ -74,11 +78,7 @@
               }}> Ändra</button>
             </td>
             <td>
-              <DeleteButtonComponent 
-                resource="categories"
-                id={category.id}
-                on:deleted={handleDeleted}
-              />
+              <DeleteButtonComponent resource="categories" id={category.id} on:deleted={handleDeleted} />
             </td>
           {:else}
           

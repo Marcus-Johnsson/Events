@@ -1,5 +1,5 @@
 <script>
-    import Table from "$lib/components/getCategoryTable.svelte"
+    import Table from "$lib/components/CategoryTable.svelte"
     
     
 
