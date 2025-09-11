@@ -7,9 +7,10 @@ interface AppError {
 }
 
 class ApiService {
-    public async post<T,D>(endpoint: string, data: D): Promise<T | AppError> {
-try {
-			const response = await fetch(`${apiUrl}${endpoint}`, {
+	public async post<T,D>(endpoint: string, data: D): Promise<T | AppError> {
+		try {
+			const url = `${apiUrl.replace(/\/$/, '')}/${endpoint.replace(/^\//, '')}`;
+			const response = await fetch(url, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
@@ -27,18 +28,15 @@ try {
 		}
     }
 
-    public async get<T>(
-        endpoint: string,
-
-        // Data types?
-		params?: Record<string, string | number | undefined>): Promise<T | AppError>{
-         try {
-			let url = `${apiUrl}${endpoint}`;
-			const response = await fetch(url, {
-				
-			});
-            if(!response.ok){
-                if (response.status === 404) {
+	public async get<T>(
+		endpoint: string,
+		params?: Record<string, string | number | undefined>
+	): Promise<T | AppError> {
+		try {
+			const url = `${apiUrl.replace(/\/$/, '')}/${endpoint.replace(/^\//, '')}`;
+			const response = await fetch(url, {});
+			if (!response.ok) {
+				if (response.status === 404) {
 					return {
 						code: 'NOT_FOUND',
 						message: `Resource not found at ${url}`,
@@ -50,72 +48,72 @@ try {
 					message: `Failed to get from ${url}`,
 					details: await response.text()
 				};
-            }		
-            const responseData = await response.json();
-			return responseData;		
-            }
-             catch (error) {
-            			return {
+			}
+			const responseData = await response.json();
+			return responseData;
+		} catch (error) {
+			return {
 				code: 'NETWORK_ERROR',
 				message: `Network error while getting from ${apiUrl}${endpoint}`,
 				details: error
-                };
-        }
-
-    }
-
-    public async put<T,D>(endpoint: string, data: D): Promise<T | AppError> {
-        try {
-            const response = await fetch(`${apiUrl}${endpoint}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-        });
-
-        if (!response.ok) {
-          const responseData = await response.json();
-			return responseData;
+			};
+		}
 	}
-    		const responseData = await response.json();
+
+	public async put<T, D>(endpoint: string, data: D): Promise<T | AppError> {
+		try {
+			const url = `${apiUrl.replace(/\/$/, '')}/${endpoint.replace(/^\//, '')}`;
+			const response = await fetch(url, {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(data)
+			});
+			if (!response.ok) {
+				const responseData = await response.json();
+				return responseData;
+			}
+			const responseData = await response.json();
 			return responseData;
-        } catch (error) {
-			
-            return {
+		} catch (error) {
+			return {
 				code: 'NETWORK_ERROR',
 				message: `Network error while patching to ${apiUrl}${endpoint}`,
 				details: error
 			};
 		}
-    }
+	}
 
-    public async delete<T>(endpoint: string): Promise<T | AppError> {
-        try {
-            const response = await fetch(`${apiUrl}${endpoint}`, {
-                method: 'DELETE',
-            });
-
-            if (!response.ok) {
-                if (response.status === 404) {
-                    return {
-                        code: 'NOT_FOUND',
-                        message: `Resource not found at ${apiUrl}${endpoint}`,
-                        details: await response.text()
-                    };
-                }
-
-            }
-            const responseData = await response.json();
+	public async delete<T>(endpoint: string): Promise<T | AppError> {
+		try {
+			const url = `${apiUrl.replace(/\/$/, '')}/${endpoint.replace(/^\//, '')}`;
+			const response = await fetch(url, {
+				method: 'DELETE',
+			});
+			if (!response.ok) {
+				if (response.status === 404) {
+					return {
+						code: 'NOT_FOUND',
+						message: `Resource not found at ${url}`,
+						details: await response.text()
+					};
+				}
+			}
+			// Handle 204 No Content response so that we don't get an error after successful deletion
+			if (response.status === 204) {
+				return {} as T;
+			}
+			const responseData = await response.json();
 			return responseData;
-             } catch (error) {
+		} catch (error) {
 			return {
 				code: 'NETWORK_ERROR',
 				message: `Network error while deleting ${apiUrl}${endpoint}`,
 				details: error
 			};
 		}
-    }
+	}
 	
 }
 
