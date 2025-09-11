@@ -5,11 +5,15 @@
       import { updateCategory } from "$lib/services/category/updateCategory";
       import type { UpdateCategoriesData } from "$lib/services/category/putCategory";
       import { text } from "@sveltejs/kit";
+<<<<<<< HEAD
 <<<<<<< HEAD:src/client/src/lib/components/getCategoryTable.svelte
       import DeleteButtonComponent from "$lib/components/deteleButtonComponent.svelte";
 =======
       import DeleteButtonComponent from "$lib/components/DeleteButtonComponent.svelte";
 >>>>>>> 0516ba447be6077a2f8ae6af15806777f42d5b2a:src/client/src/lib/components/CategoryTable.svelte
+=======
+      import DeleteButtonComponent from "$lib/components/DeleteButtonComponent.svelte";
+>>>>>>> 0516ba447be6077a2f8ae6af15806777f42d5b2a
       import {createCategory} from "$lib/services/category/createCategorybutton";
 
       let choosenCategory: number | null = $state(null);
