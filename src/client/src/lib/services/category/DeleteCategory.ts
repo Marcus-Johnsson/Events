@@ -8,7 +8,7 @@ export class CategoryDeleteService {
     constructor(private apiService: ApiService) {}
 
     public async deleteCategory(categoryData: CategoryDeleteData): Promise<CategoryDeleteData> {
-        const response = await this.apiService.delete(`/category/${categoryData.id}`);
+        const response = await this.apiService.delete(`/categories/${categoryData.id}`);
         return response as CategoryDeleteData;
     }
 }

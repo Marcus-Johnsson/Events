@@ -100,10 +100,6 @@ class ApiService {
 					};
 				}
 			}
-			// Handle 204 No Content response so that we don't get an error after successful deletion
-			if (response.status === 204) {
-				return {} as T;
-			}
 			const responseData = await response.json();
 			return responseData;
 		} catch (error) {
