@@ -32,6 +32,7 @@
 <div class="card-container">
     {#each data.events as event}
         <div class="card">
+            <!-- svelte-ignore a11y_img_redundant_alt -->
             <img src="https://media.tenor.com/yheo1GGu3FwAAAAM/rick-roll-rick-ashley.gif" alt="Event Image" />
             <h2>{event.title}</h2>
             <p class="description">{event.description}</p>
