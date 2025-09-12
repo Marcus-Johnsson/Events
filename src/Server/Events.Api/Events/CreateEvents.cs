@@ -17,7 +17,7 @@ namespace Events.Api.Events
             .Produces<string>(StatusCodes.Status500InternalServerError);
 
 
-        public record CreateEventRequest(string Title, string Description, DateTime StartDate, DateTime EndDate, string Location, int[]? CategoryIds) { }
+        public record CreateEventRequest(string Title, string Description, DateTime StartDate, DateTime EndDate, string Location, int[]? categories) { }
 
 
         public record CreateEventResponse(int Id);
@@ -46,15 +46,15 @@ namespace Events.Api.Events
 
             // Validate and get categories if provided
             List<Category> categories = new();
-            if (request.CategoryIds != null && request.CategoryIds.Any())
+            if (request.categories != null && request.categories.Any())
             {
                 categories = await dbContext.Categories
-                    .Where(c => request.CategoryIds.Contains(c.Id))
+                    .Where(c => request.categories.Contains(c.Id))
                     .ToListAsync();
 
                 // Check if all requested categories exist
                 var foundCategoryIds = categories.Select(c => c.Id).ToList();
-                var missingCategoryIds = request.CategoryIds.Except(foundCategoryIds).ToList();
+                var missingCategoryIds = request.categories.Except(foundCategoryIds).ToList();
 
                 if (missingCategoryIds.Any())
                 {

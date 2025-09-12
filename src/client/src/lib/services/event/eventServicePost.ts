@@ -6,11 +6,11 @@ export interface EventData {
     dateEnd: Date;  
     location: string;
     description?: string;
-    categories: string[];
+    categories: number[];
 }
 
 export interface EventDataReponse {
-    name: string;
+    name: number;
 }
 
 export class EventPostService {

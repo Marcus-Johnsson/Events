@@ -23,7 +23,7 @@
     let title = $state("");
     let description = $state("");
     let location = $state("");
-    let selectedCategories: string[] = $state([]);
+    let selectedCategories: number[] = $state([]);
     let dateStart: Date = $state(new Date());
     let dateEnd: Date = $state(new Date());
 
