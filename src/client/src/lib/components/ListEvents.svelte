@@ -32,6 +32,7 @@
 <div class="card-container">
     {#each data.events as event}
         <div class="card">
+            <img src="https://media.tenor.com/yheo1GGu3FwAAAAM/rick-roll-rick-ashley.gif" alt="Event Image" />
             <h2>{event.title}</h2>
             <p class="description">{event.description}</p>
             <p><strong>Plats:</strong> {event.location}</p>
@@ -72,6 +73,13 @@
     .card h2 {
         margin-top: 0;
         font-size: 1.2rem;
+    }
+
+    .card img {
+        width: 200px;       /* fast bredd */
+        height: 200px;      /* fast höjd */
+        object-fit: cover;  /* ser till att bilden inte blir ihoptryckt */
+        border-radius: 6px;
     }
 
     .card .description {
