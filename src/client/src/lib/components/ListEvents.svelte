@@ -4,16 +4,25 @@
     import { onMount } from "svelte";
     import type { GetAllEventResponse } from '$lib/services/event/eventServiceGet';
     import DeleteButtonComponent from "$lib/components/DeleteButtonComponent.svelte";
+    import { EventDeleteService } from '$lib/services/event/eventServiceDelete';
 
     const apiService = new ApiService();
     const eventGetService = new EventServiceGet(apiService);
+    const eventDeleteService = new EventDeleteService(apiService);
     export let data: { events: GetAllEventResponse[] } = { events: [] };
-   
-    
 
     onMount(async () => {
         data.events = await eventGetService.getAllEvents();
     });
+
+    async function handleDeleteEvent(id: number) {
+      try {
+        await eventDeleteService.deleteEvent({ id });
+        data.events = data.events.filter(e => e.id !== id);
+      } catch (err) {
+        alert(`Error deleting event: ${(err as any)?.message || err}`);
+      }
+    }
 </script>
 
 <h1>All Events</h1>
@@ -23,6 +32,7 @@
 <div class="card-container">
     {#each data.events as event}
         <div class="card">
+            <img src="https://media.tenor.com/yheo1GGu3FwAAAAM/rick-roll-rick-ashley.gif" alt="Event Image" />
             <h2>{event.title}</h2>
             <p class="description">{event.description}</p>
             <p><strong>Plats:</strong> {event.location}</p>
@@ -32,7 +42,12 @@
             
             <div class="actions">
                 <button>Ändra</button>
-                <DeleteButtonComponent className="deleteEventButton" resource="events" id={event.id} />
+                <DeleteButtonComponent
+                onDelete={handleDeleteEvent}
+                itemId={event.id}
+                itemType="Event"
+                className="deleteEventButton"
+              />
             </div>
         </div>
     {/each}
@@ -58,6 +73,13 @@
     .card h2 {
         margin-top: 0;
         font-size: 1.2rem;
+    }
+
+    .card img {
+        width: 200px;       /* fast bredd */
+        height: 200px;      /* fast höjd */
+        object-fit: cover;  /* ser till att bilden inte blir ihoptryckt */
+        border-radius: 6px;
     }
 
     .card .description {

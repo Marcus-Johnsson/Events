@@ -1,36 +1,33 @@
 <script lang="ts">
-  import ApiService from '$lib/services/apiService';
-  import { singularize } from '$lib/utils/singularize';
-
-  export let resource: string; // e.g. "categories", "events"
-  export let id: number;
+  export let onDelete: (id: number) => Promise<any>;
+  export let itemId: number;
+  export let itemType: string = "Item";
   export let className: string;
 
-  const apiService = new ApiService();
+  // Debug logging
+  console.log('DeleteButtonComponent props:', { onDelete, itemId, itemType, className });
+  console.log('onDelete type:', typeof onDelete);
 
   async function handleDelete(event: MouseEvent) {
     event.stopPropagation();
-    
-    const singular = singularize(resource);
-
-    if (confirm(`Are you sure you want to delete this ${singular}?`)) {
-      const result = await apiService.delete(`${resource}/${id}`);
-
-      if (typeof result === 'object' && result !== null && "code" in result) {
-        const errorResult = result as { code: number; message: string };
-        alert(`Error deleting: ${errorResult.message}`);
-      } else {
+    console.log('Delete button clicked:', { itemId, itemType, onDelete });
+    if (confirm(`Are you sure you want to delete this ${itemType}?`)) {
+      try {
+        await onDelete(itemId);
         const deletedEvent = new CustomEvent('deleted', {
-          detail: { id, resource },
+          detail: { id: itemId, type: itemType },
           bubbles: true,
           composed: true
         });
         dispatchEvent(deletedEvent);
+      } catch (err) {
+        const errorMessage = typeof err === 'object' && err !== null && 'message' in err ? (err as { message: string }).message : String(err);
+        alert(`Error deleting: ${errorMessage}`);
       }
     }
   }
 </script>
 
-<button class={className} on:click={handleDelete} title="Delete">
-  Delete
+<button class={className} on:click={handleDelete} title={`Delete ${itemType}`}>
+  Delete {itemType}
 </button>

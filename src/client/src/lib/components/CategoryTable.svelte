@@ -1,28 +1,38 @@
   <script lang="ts">
-      import ApiService from "$lib/services/apiService";
-      import { CategoryPostService } from "$lib/services/category/GetCategory";
-      import { onMount } from "svelte";
-      import { updateCategory } from "$lib/services/category/updateCategory";
-      import type { UpdateCategoriesData } from "$lib/services/category/putCategory";
-      import DeleteButtonComponent from "$lib/components/DeleteButtonComponent.svelte";
-      import {createCategory} from "$lib/services/category/createCategorybutton";
+  import ApiService from "$lib/services/apiService";
+  import { CategoryPostService } from "$lib/services/category/GetCategory";
+  import { onMount } from "svelte";
+  import { updateCategory } from "$lib/services/category/updateCategory";
+  import type { UpdateCategoriesData } from "$lib/services/category/putCategory";
+  import DeleteButtonComponent from "$lib/components/DeleteButtonComponent.svelte";
+  import { createCategory } from "$lib/services/category/createCategorybutton";
+  import { CategoryDeleteService } from "$lib/services/category/deleteCategory";
 
-      let choosenCategory: number | null = $state(null);
-      let title = $state("");
-      let createTitle = $state("");
-    
-      const apiService = new ApiService();
+    let choosenCategory: number | null = $state(null);
+    let title = $state("");
+    let createTitle = $state("");
+    const apiService = new ApiService();
+    const categoryDeleteService = new CategoryDeleteService(apiService);
 
-      interface Category{
-          title: string;
-          id: number;
-      }
-      let categories = $state<Category[]>([]);
+    interface Category {
+      title: string;
+      id: number;
+    }
+    let categories = $state<Category[]>([]);
 
-      onMount(async () => {
+    onMount(async () => {
       categories = await new CategoryPostService(apiService).GetCategories();
       categories.sort((a: Category, b: Category) => b.id - a.id );
-      });
+    });
+
+    async function handleDeleteCategory(id: number) {
+      try {
+        await categoryDeleteService.deleteCategory({ id });
+        categories = categories.filter(c => c.id !== id);
+      } catch (err) {
+        alert(`Error deleting category: ${(err as any)?.message || err}`);
+      }
+    }
 
       async function confirmOption(updatedCategory: UpdateCategoriesData) {
         updatedCategory= {
@@ -67,7 +77,12 @@
               }}> Ändra</button>
             </td>
             <td>
-              <DeleteButtonComponent className="deleteCategoryButton" resource="categories" id={category.id} />
+              <DeleteButtonComponent
+                onDelete={handleDeleteCategory}
+                itemId={category.id}
+                itemType="Category"
+                className="deleteCategoryButton"
+              />
             </td>
           {:else}
           
