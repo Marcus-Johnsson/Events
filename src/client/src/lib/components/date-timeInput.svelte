@@ -2,24 +2,21 @@
     let hours = Array.from({ length: 24 }, (_, i) => String(i).padStart(2, '0'));
     let minutes = ["00", "15", "30", "45"];
 
-    let selectedHourStart = "00";
-    let selectedMinuteStart = "00";
+     let selectedHourStart = "00";
+     let selectedMinuteStart = "00";
 
-    let selectedHourEnd = "00";
-    let selectedMinuteEnd = "00";
+     let selectedHourEnd = "00";
+     let selectedMinuteEnd = "00";
 
-    let dateStart = "";
-    let dateEnd = "";
+     let dateStart = "";
+     let dateEnd = "";
+
+    export let startDateTime = new Date(`${dateStart}T${selectedHourStart}:${selectedMinuteStart}:00`);
+    export let endDateTime = new Date(`${dateEnd}T${selectedHourEnd}:${selectedMinuteEnd}:00`);
 
     $: timeStart = `${selectedHourStart}:${selectedMinuteStart}`;
     $: timeEnd = `${selectedHourEnd}:${selectedMinuteEnd}`;
-
-    $: startDateTime = new Date(`${dateStart}T${selectedHourStart}:${selectedMinuteStart}:00`);
-    $: endDateTime = new Date(`${dateEnd}T${selectedHourEnd}:${selectedMinuteEnd}:00`);
-
     $: isEndBeforeStart = endDateTime < startDateTime;
-
-
 </script>
 
 <div>
@@ -28,7 +25,7 @@
         {#each hours as h}
         <option value={h}>{h}</option>
         {/each}
-  </select>
+    </select>
   :
     <select bind:value={selectedMinuteStart}>
         {#each minutes as m}

@@ -1,21 +1,15 @@
 import ApiService from '../apiService';
 
 export interface EventData {
-    name: string;
+    title: string;
     dateStart: Date; 
     dateEnd: Date;  
     location: string;
     description?: string;
-    cateories: Categories[];
-}
-
-export interface Categories {
-    id: string;
-    name: string;
+    categories: string[];
 }
 
 export interface EventDataReponse {
-   
     name: string;
 }
 
@@ -23,7 +17,7 @@ export class EventPostService {
     constructor(private apiService: ApiService) {}
 
     public async postEvent<T>(eventData: EventData): Promise<EventDataReponse> {
-		const response = await this.apiService.post('/event', eventData);
+		const response = await this.apiService.post('/events', eventData);
 		return response as EventDataReponse;
 
     }
